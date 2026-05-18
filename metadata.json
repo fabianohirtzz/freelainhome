@@ -1,0 +1,6 @@
+{
+  "name": "Freela In Home",
+  "description": "Agência de desenvolvimento web premium. Sites que não só impressionam, convertem.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

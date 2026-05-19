@@ -52,3 +52,617 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-white/10 rounded-full hover:bg-brand-cyan/50 transition-colors;
 }
+
+/* ── Portfolio: Browser Mockup Cards ── */
+.project-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.browser-mockup {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.browser-bar {
+  height: 28px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.browser-content {
+  width: 100%;
+  height: calc(100% - 28px);
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #0a0a0a;
+  transition: background-position 5s ease-in-out;
+}
+
+.project-card:hover .browser-content {
+  background-position: bottom center;
+}
+
+.project-card:hover .browser-mockup {
+  border-color: rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 40px rgba(0, 191, 255, 0.15);
+}
+
+/* Disable scroll-on-hover on touch devices */
+@media (hover: none) {
+  .browser-content {
+    background-position: top center !important;
+    transition: none;
+  }
+}
+
+/* ── Services: Card Animations ── */
+.service-card:hover {
+  border-color: rgba(0, 191, 255, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 191, 255, 0.12);
+  transform: translateY(-4px);
+}
+
+.service-icon-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(0, 191, 255, 0.1);
+  border: 1px solid rgba(0, 191, 255, 0.3);
+  transition: all 0.4s ease;
+}
+
+.service-card:hover .service-icon-box {
+  background: rgba(0, 191, 255, 0.2);
+  border-color: rgba(0, 191, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.service-card:hover .service-icon-box svg {
+  transform: rotate(-8deg) scale(1.1);
+  transition: transform 0.4s ease;
+}
+
+/* Light beam across top */
+.service-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00BFFF, transparent);
+  transition: left 0.8s ease;
+  z-index: 10;
+}
+
+.service-card:hover .service-beam {
+  left: 100%;
+}
+
+/* CTA gap transition */
+.service-cta {
+  gap: 4px;
+  transition: gap 0.3s ease;
+}
+
+.service-card:hover .service-cta {
+  gap: 10px;
+}
+
+/* Disable 3D tilt on touch devices */
+@media (hover: none) {
+  .service-card {
+    transform: none !important;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .service-card:hover,
+  .service-beam,
+  .service-icon-box,
+  .service-cta {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .service-card:hover .service-beam {
+    left: -100%;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   About Page Styles
+   ══════════════════════════════════════════════════════ */
+
+/* ── Shared Eyebrow ─────────────────────────────────── */
+.about-eyebrow {
+  display: block;
+  color: #00BFFF;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── Manifesto Section ──────────────────────────────── */
+.about-manifesto-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-manifesto-card {
+  position: relative;
+  width: 100%;
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.about-manifesto-photo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  margin-left: auto;
+}
+
+.about-manifesto-photo-glow {
+  position: absolute;
+  inset: -8px;
+  background: linear-gradient(135deg, rgba(0, 191, 255, 0.4), rgba(0, 102, 255, 0.4));
+  border-radius: 16px;
+  filter: blur(20px);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about-manifesto-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 16px;
+  z-index: 1;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.about-manifesto-photo-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 191, 255, 0.3);
+  border-radius: 999px;
+  padding: 8px 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-manifesto-photo-name {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.about-manifesto-photo-role {
+  color: #00BFFF;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+.about-manifesto-quote {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: #1a1a1a;
+  font-size: 80px;
+  font-family: Georgia, serif;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Stats Grid ─────────────────────────────────────── */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.about-stat-card {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.about-stat-card:hover {
+  border-color: rgba(0, 191, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.about-stat-value {
+  color: #00BFFF;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.about-stat-label {
+  color: #a1a1aa;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Timeline ───────────────────────────────────────── */
+.about-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.about-timeline-line {
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(180deg, #00BFFF 0%, rgba(0, 191, 255, 0.1) 100%);
+}
+
+.about-timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.about-timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.about-timeline-bullet {
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background: #00BFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
+}
+
+.about-timeline-bullet-highlight {
+  box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.4), 0 0 24px rgba(0, 191, 255, 0.6);
+}
+
+.about-timeline-year {
+  color: #00BFFF;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.about-timeline-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.about-timeline-desc {
+  color: #a1a1aa;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Values Grid ────────────────────────────────────── */
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.about-value-card {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.about-value-card:hover {
+  border-color: rgba(0, 191, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 191, 255, 0.08);
+}
+
+.about-value-icon-box {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(0, 191, 255, 0.1);
+  border: 1px solid rgba(0, 191, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* ── Logo Carousel ──────────────────────────────────── */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.about-marquee-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.about-marquee-track {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.about-marquee-mask:hover .about-marquee-track {
+  animation-play-state: paused;
+}
+
+.about-marquee-static {
+  animation: none !important;
+  width: auto !important;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.about-logo-card {
+  width: 200px;
+  height: 100px;
+  flex-shrink: 0;
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  transition: all 0.3s;
+}
+
+.about-logo-card:hover {
+  border-color: rgba(0, 191, 255, 0.4);
+}
+
+.about-logo-img {
+  max-width: 90%;
+  max-height: 80%;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(0.7);
+  transition: filter 0.3s, transform 0.3s;
+  transform: scale(1.15);
+  transform-origin: center;
+}
+
+.about-logo-card:hover .about-logo-img {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.2);
+}
+
+/* ── CTA Section ────────────────────────────────────── */
+.about-cta-section {
+  background: radial-gradient(ellipse at center, rgba(0, 191, 255, 0.08), transparent 70%);
+  border: 1px solid #1f1f1f;
+  border-radius: 16px;
+  padding: 60px 40px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-cta-light {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00BFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.6);
+  opacity: 0.6;
+  animation: pulse-light 3s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-light {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+.about-cta-content {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-cta-headline {
+  font-size: clamp(36px, 5vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.about-cta-subhead {
+  color: #a1a1aa;
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.about-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #00BFFF 0%, #0066FF 100%);
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.25);
+  transition: all 0.3s;
+}
+
+.about-cta-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 28px rgba(0, 191, 255, 0.4);
+}
+
+/* ══════════════════════════════════════════════════════
+   About Page — Responsive
+   ══════════════════════════════════════════════════════ */
+
+/* Tablet (640‑1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .about-manifesto-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .about-logo-card {
+    width: 170px;
+    height: 85px;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (<640px) */
+@media (max-width: 639px) {
+  .about-manifesto-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .about-manifesto-photo-wrapper {
+    margin: 0 auto;
+    max-width: 320px;
+    order: -1;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-timeline {
+    padding-left: 24px;
+  }
+
+  .about-timeline-bullet {
+    left: -20px;
+  }
+
+  .about-values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-logo-card {
+    width: 140px;
+    height: 70px;
+  }
+
+  .about-cta-section {
+    padding: 40px 24px;
+  }
+
+  .about-cta-headline {
+    font-size: clamp(28px, 8vw, 32px);
+  }
+
+  .about-cta-btn {
+    width: 100%;
+  }
+
+  .about-manifesto-card {
+    padding: 20px;
+  }
+
+  .about-manifesto-quote {
+    font-size: 60px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .about-manifesto-card > div {
+    padding-left: 24px !important;
+  }
+}
+
+/* ── About: Reduced motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .about-stat-card,
+  .about-stat-card:hover,
+  .about-value-card,
+  .about-value-card:hover,
+  .about-cta-btn,
+  .about-cta-btn:hover,
+  .about-logo-card,
+  .about-logo-img {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .about-marquee-track {
+    animation: none !important;
+  }
+}

@@ -4,9 +4,10 @@ import { MessageCircle } from "lucide-react";
 export default function WhatsAppButton() {
   return (
     <motion.a
-      href="https://wa.me/5548991227776"
+      href="https://api.whatsapp.com/send?phone=5548991227776"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Fale conosco pelo WhatsApp (abre em nova aba)"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       whileHover={{ scale: 1.1 }}

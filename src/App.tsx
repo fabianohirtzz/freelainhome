@@ -14,7 +14,7 @@ import Portfolio from "@/src/pages/Portfolio";
 import Process from "@/src/pages/Process";
 import About from "@/src/pages/About";
 import Contact from "@/src/pages/Contact";
-import CaseStudy from "@/src/pages/CaseStudy";
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,7 +37,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/servicos" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/portfolio/:id" element={<CaseStudy />} />
+
             <Route path="/processo" element={<Process />} />
             <Route path="/sobre" element={<About />} />
             <Route path="/contato" element={<Contact />} />

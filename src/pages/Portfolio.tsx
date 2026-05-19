@@ -1,99 +1,175 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link } from "react-router-dom";
-import { ExternalLink, ArrowRight } from "lucide-react";
-
-const categories = ["Todos", "Institucional", "Landing Page", "E-commerce", "Web App"];
-
-const projects = [
-  { id: "barra-boat-floripa", name: "Barra Boat Floripa", category: "Institucional", link: "https://barraboatfloripa.com.br" },
-  { id: "oceano-passeios-de-lancha", name: "Oceano Passeios", category: "Institucional", link: "https://oceanopasseiosdelancha.com.br" },
-  { id: "complexo-tea", name: "Complexo TEA", category: "Institucional", link: "https://complexotea.com.br" },
-  { id: "farmia", name: "Farmia", category: "Web App", link: "https://farmia.app" },
-  { id: "proarmy", name: "PROARMY", category: "Web App", link: "https://proarmy.com.br" },
-  { id: "synczap", name: "SyncZap", category: "Web App", link: "https://synczap.com.br" },
-  { id: "chavelli-longhi", name: "Chavelli Longhi", category: "Institucional", link: "https://chavellilonghi.com.br" },
-  { id: "baurea", name: "Baurea", category: "Institucional", link: "https://baurea.com.br" },
-  { id: "hd360", name: "HD360", category: "Web App", link: "https://hd360.com.br" },
-  { id: "residencial-libertad", name: "Residencial Libertad", category: "Landing Page", link: "https://residenciallibertad.com.br" },
-];
+import { ExternalLink } from "lucide-react";
+import { projects, typeFilters, categoryFilters } from "@/src/data/projects";
 
 export default function Portfolio() {
-  const [filter, setFilter] = useState("Todos");
+  const [typeFilter, setTypeFilter] = useState<string>("Todos");
+  const [categoryFilter, setCategoryFilter] = useState<string>("Todas categorias");
 
-  const filteredProjects = filter === "Todos" 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+  const filteredProjects = projects.filter((p) => {
+    const matchesType = typeFilter === "Todos" || p.type === typeFilter;
+    const matchesCategory = categoryFilter === "Todas categorias" || p.category === categoryFilter;
+    return matchesType && matchesCategory;
+  });
 
   return (
     <div className="pt-32 pb-24">
       <div className="container mx-auto px-6">
-        <div className="max-w-3xl mb-16">
+        {/* Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mb-16"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-[2px] bg-brand-cyan" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-cyan">
+              PORTFÓLIO
+            </span>
+          </div>
           <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-8">
             Cada projeto, uma estratégia. <br />
             <span className="text-gradient">Cada cliente, um resultado.</span>
           </h1>
           <p className="text-text-secondary text-xl">
-            Uma seleção de 150+ projetos entregues nos últimos 12 anos em diferentes países e segmentos.
+            22 projetos selecionados de mais de 150 entregues em 12 anos. De startups tech a clínicas médicas, do Brasil ao exterior.
           </p>
+        </motion.div>
+
+        {/* Filters */}
+        <div className="space-y-4 mb-16">
+          {/* Type Filter */}
+          <div className="flex flex-wrap gap-3">
+            {typeFilters.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTypeFilter(t)}
+                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
+                  typeFilter === t
+                    ? "bg-brand-cyan text-black"
+                    : "bg-bg-secondary text-text-secondary border border-border-subtle hover:border-brand-cyan/50"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2">
+            {categoryFilters.map((c) => (
+              <button
+                key={c}
+                onClick={() => setCategoryFilter(c)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  categoryFilter === c
+                    ? "bg-white/10 text-white border border-white/20"
+                    : "text-text-muted border border-transparent hover:text-text-secondary hover:border-border-subtle"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 mb-16">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
-                filter === cat 
-                  ? "bg-brand-cyan text-black" 
-                  : "bg-bg-secondary text-text-secondary border border-border-subtle hover:border-brand-cyan/50"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="group bg-bg-secondary rounded-2xl border border-border-subtle overflow-hidden hover:border-brand-cyan transition-all"
-              >
-                <div className="aspect-video bg-bg-tertiary relative overflow-hidden">
-                   <div className="absolute inset-0 bg-brand-cyan/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                     <ArrowRight size={40} className="text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-500" />
-                   </div>
-                   {/* Placeholder for project mockups */}
-                   <div className="flex items-center justify-center h-full text-text-muted font-bold tracking-tighter text-4xl opacity-10 uppercase italic">
-                      {project.name.split(' ')[0]}
-                   </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-brand-cyan uppercase tracking-widest">{project.category}</span>
-                    <a href={project.link} target="_blank" className="text-text-muted hover:text-brand-cyan transition-colors">
-                      <ExternalLink size={16} />
-                    </a>
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">{project.name}</h3>
-                  <Link 
-                    to={`/portfolio/${project.id}`} 
-                    className="text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all"
-                  >
-                    Ver Case Completo <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </motion.div>
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </AnimatePresence>
         </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-20 text-text-muted">
+            <p className="text-lg">Nenhum projeto encontrado com esses filtros.</p>
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+/* ─── Project Card ──────────────────────────────────────── */
+
+function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.3 }}
+    >
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="project-card group block"
+      >
+        {/* Browser Mockup */}
+        <div className="browser-mockup">
+          <div className="browser-bar">
+            <span className="dot dot-red" />
+            <span className="dot dot-yellow" />
+            <span className="dot dot-green" />
+          </div>
+
+          <div
+            className="browser-content"
+            style={{
+              backgroundImage: isVisible ? `url(${project.image})` : undefined,
+            }}
+          />
+
+          {/* External link badge */}
+          <div className="absolute top-10 right-3 z-10 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-text-muted group-hover:text-brand-cyan transition-colors">
+            <ExternalLink size={13} />
+          </div>
+        </div>
+
+        {/* Project Info */}
+        <div className="p-5">
+          <span className="text-[10px] font-bold text-brand-cyan uppercase tracking-widest">
+            {project.type}
+          </span>
+          <h3 className="text-lg font-bold mt-1 mb-0.5 text-white group-hover:text-brand-cyan transition-colors">
+            {project.name}
+          </h3>
+          <span className="text-sm text-text-muted">{project.segment}</span>
+
+          <div className="mt-4 flex items-center gap-2 text-sm font-bold text-text-secondary group-hover:text-white transition-colors">
+            Acessar Site <ExternalLink size={14} />
+          </div>
+        </div>
+      </a>
+    </motion.div>
   );
 }

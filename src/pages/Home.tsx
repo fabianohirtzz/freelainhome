@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   Star
 } from "lucide-react";
-import Rocket from "@/src/components/Rocket";
 import { Link } from "react-router-dom";
 import { cn } from "@/src/lib/utils";
 
@@ -64,24 +63,100 @@ const services = [
 ];
 
 const testimonials = [
-  { name: "Fabiano", date: "Há 1 mês", text: "Excelente trabalho, o site ficou impecável e a conversão aumentou logo na primeira semana." },
-  { name: "Mariana", date: "Há 2 meses", text: "Profissionais de alto nível. Cumpriram o prazo e superaram as expectativas no design." },
-  { name: "Ricardo", date: "Há 3 meses", text: "O suporte pós-entrega é o diferencial. Estão sempre dispostos a ajudar e otimizar." },
-  { name: "Juliana", date: "Há 4 meses", text: "Minha landing page está convertendo 3x mais do que a anterior. Recomendo fortemente." },
-  { name: "Lucas", date: "Há 5 meses", text: "Sistema customizado que resolveu gargalos de anos na nossa empresa. Nota 10." },
-  { name: "Amanda", date: "Há 6 meses", text: "O cuidado com o SEO técnico fez nosso site aparecer na primeira página em tempo recorde." },
+  {
+    name: "Barra Boat Floripa",
+    role: "Aluguel de Lanchas",
+    initial: "B",
+    rating: 5,
+    text: "Freela In Home! Fabiano, só agradecer esses anos todos de parceria. Você aguentando minhas indecisões na hora de finalizar os projetos, mas sempre me mostrando o melhor caminho tomar. Nossos projetos ficaram alegres e claros para o meu cliente. Sem contar a sua humildade e carinho conosco. Valeu... Daria 1000 estrelas se pudesse.",
+  },
+  {
+    name: "Lais Marqueze Dal Grande",
+    role: "Pereira Oliveira Turismo",
+    initial: "L",
+    rating: 5,
+    text: "Super recomendo o trabalho do Fabiano. Fez o site da nossa agência, bem como outros materiais. Amei o trabalho dele. Fácil comunicação e disponibilidade. Obrigada mais uma vez Fabiano!",
+  },
+  {
+    name: "Mauricio Perucci",
+    role: "Cliente",
+    initial: "M",
+    rating: 5,
+    text: "A competência e a qualidade dos serviços preparados pela Freela In Home, são impecáveis! Trabalho de qualidade, no tempo certo e com muita competência! Recomendo o Fabiano! Falem com ele e ele resolverá tudo o que vocês precisam!",
+  },
+  {
+    name: "Hérico Camargo",
+    role: "Cliente",
+    initial: "H",
+    rating: 5,
+    text: "O Fabiano é um baita profissional, construiu o site da minha empresa do zero, entregou um ótimo resultado por um preço justo! Recomendo.",
+  },
+  {
+    name: "Tiago Silveira Campezato",
+    role: "Cliente",
+    initial: "T",
+    rating: 5,
+    text: "Profissional de alto nível, com um conhecimento na área incrível. Superou todas minhas expectativas e tirou todas minhas dúvidas antes de fecharmos o contrato. Parabéns pelo profissionalismo e dedicação em nossa parceria.",
+  },
+  {
+    name: "Filipe Goulart",
+    role: "Cliente",
+    initial: "F",
+    rating: 5,
+    text: "Atendimento e qualidade acima do esperado! Sempre superando as expectativas nas entregas dos trabalhos! Parabéns a toda equipe!",
+  },
 ];
 
 export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="min-h-screen pt-20 flex items-center relative overflow-hidden">
-        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section
+        className="min-h-screen pt-20 flex items-center relative overflow-hidden"
+      >
+        {/* Background Video — z-0 */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            zIndex: 0,
+          }}
+        >
+          <source src="/videos/home_inicio.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark Gradient Overlay — z-1 */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 1,
+            pointerEvents: "none",
+            background: [
+              "linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.25))",
+              "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.7) 100%)",
+            ].join(", "),
+          }}
+        />
+
+        {/* Content — z-2 */}
+        <div className="container mx-auto px-6 relative" style={{ zIndex: 2 }}>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
+            className="max-w-3xl"
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-brand-cyan" />
@@ -120,21 +195,7 @@ export default function Home() {
               ))}
             </div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="hidden lg:block h-full"
-          >
-            <Rocket />
-          </motion.div>
         </div>
-
-        {/* Background Grid Accent */}
-        <div className="absolute inset-0 z-[-1] opacity-5 pointer-events-none" 
-             style={{ backgroundImage: 'radial-gradient(#1f1f1f 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
-        />
       </section>
 
       {/* Problem Section */}
@@ -229,33 +290,41 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-2 text-white font-bold text-2xl">
                  <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" className="h-6" />
               </div>
-              <div className="flex gap-1 text-yellow-400">
+              <div className="flex gap-1 text-yellow-400" aria-label="5 estrelas de 5">
                 {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
               </div>
-              <span className="text-white font-bold">5,0 baseado em 50+ avaliações</span>
-              <a href="https://g.page/r/CQBhVD9tp10bEBM/review" target="_blank" className="text-brand-cyan text-sm underline mt-2">Ver no Google</a>
+              <span className="text-white font-bold">5,0 baseado em 20 avaliações</span>
+              <a
+                href="https://g.page/r/CQBhVD9tp10bEAE/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ver todas as avaliações no Google (abre em nova aba)"
+                className="text-brand-cyan text-sm underline mt-2"
+              >
+                Ver no Google →
+              </a>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <div key={i} className="p-8 rounded-2xl bg-bg-tertiary border border-border-subtle flex flex-col gap-4 relative">
+              <div key={i} className="p-8 rounded-2xl bg-bg-tertiary border border-border-subtle hover:border-brand-cyan/30 transition-all flex flex-col gap-4 relative">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center font-bold text-brand-cyan">
-                      {t.name[0]}
+                      {t.initial}
                     </div>
                     <div>
                       <h4 className="font-bold text-sm">{t.name}</h4>
-                      <p className="text-[10px] text-text-muted uppercase tracking-wider">{t.date}</p>
+                      <p className="text-[10px] text-text-muted uppercase tracking-wider">{t.role}</p>
                     </div>
                   </div>
-                  <div className="flex gap-0.5 text-yellow-400">
-                    {[...Array(5)].map((_, j) => <Star key={j} size={12} fill="currentColor" />)}
+                  <div className="flex gap-0.5 text-yellow-400" aria-label="5 estrelas de 5">
+                    {[...Array(t.rating)].map((_, j) => <Star key={j} size={12} fill="currentColor" />)}
                   </div>
                 </div>
                 <p className="text-text-secondary text-sm leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                <div className="absolute top-4 right-4 opacity-10">
+                <div className="absolute top-4 right-4 opacity-30">
                    <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" alt="G" className="w-4" />
                 </div>
               </div>
@@ -282,7 +351,7 @@ export default function Home() {
               <Link to="/contato" className="bg-gradient px-10 py-5 rounded-full font-bold text-lg hover:glow-cyan transition-all w-full sm:w-auto">
                 Solicitar Orçamento →
               </Link>
-              <a href="https://wa.me/5548991227776" className="border border-white/20 hover:bg-white/5 px-10 py-5 rounded-full font-bold text-lg transition-all w-full sm:w-auto">
+              <a href="https://api.whatsapp.com/send?phone=5548991227776" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp (abre em nova aba)" className="border border-white/20 hover:bg-white/5 px-10 py-5 rounded-full font-bold text-lg transition-all w-full sm:w-auto">
                 Falar no WhatsApp
               </a>
             </div>

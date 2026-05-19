@@ -37,11 +37,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="flex items-center font-extrabold text-2xl tracking-tighter">
-            <span className="text-white">FREELA</span>
-            <span className="mx-1 px-1.5 py-0.5 border-2 border-brand-cyan text-brand-cyan rounded">IN</span>
-            <span className="text-white">HOME</span>
-          </div>
+          <img src="/images/logo-horizontal.png" alt="Freela In Home" className="h-8" />
         </Link>
 
         {/* Desktop Nav */}

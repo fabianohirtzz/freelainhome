@@ -88,7 +88,7 @@ export default function BioLink() {
             transition={{ duration: 0.6 }}
             src="/images/fabiano-hirtz.jpg" 
             alt="Fabiano Hirtz" 
-            className="w-24 h-24 rounded-full border-2 border-[#00BFFF] shadow-[0_0_24px_rgba(0,191,255,0.4)] object-cover mb-4"
+            className="w-24 h-24 rounded-full border-2 border-[#00BFFF] shadow-[0_0_24px_rgba(0,191,255,0.4)] object-cover object-top mb-4"
           />
 
           {/* Nome e Cargo */}

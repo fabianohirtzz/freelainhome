@@ -14,6 +14,7 @@ import Portfolio from "@/src/pages/Portfolio";
 import Process from "@/src/pages/Process";
 import About from "@/src/pages/About";
 import Contact from "@/src/pages/Contact";
+import BioLink from "@/src/pages/BioLink";
 
 
 function ScrollToTop() {
@@ -26,26 +27,36 @@ function ScrollToTop() {
   return null;
 }
 
+function AppContent() {
+  const { pathname } = useLocation();
+  const isLinkPage = pathname === "/link";
+
+  return (
+    <div className="flex flex-col min-h-screen bg-black text-white selection:bg-brand-cyan/30">
+      {!isLinkPage && <Navbar />}
+      <main className="grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/servicos" element={<Services />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+
+          <Route path="/processo" element={<Process />} />
+          <Route path="/sobre" element={<About />} />
+          <Route path="/contato" element={<Contact />} />
+          <Route path="/link" element={<BioLink />} />
+        </Routes>
+      </main>
+      {!isLinkPage && <Footer />}
+      {!isLinkPage && <WhatsAppButton />}
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-black text-white selection:bg-brand-cyan/30">
-        <Navbar />
-        <main className="grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/servicos" element={<Services />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-
-            <Route path="/processo" element={<Process />} />
-            <Route path="/sobre" element={<About />} />
-            <Route path="/contato" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-        <WhatsAppButton />
-      </div>
+      <AppContent />
     </Router>
   );
 }
